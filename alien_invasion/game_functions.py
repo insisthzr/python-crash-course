@@ -86,14 +86,6 @@ def update_bullets(ai_setting, screen, stats, sb, ship, aliens, bullets):
         ai_setting, screen, stats, sb, ship, aliens, bullets)
 
 
-def check_aliens_bottom(ai_setting, stats, screen, sb, ship, aliens, bullets):
-    screen_rect = screen.get_rect()
-    for alien in aliens.sprites():
-        if alien.rect.bottom >= screen_rect.bottom:
-            ship_hit(ai_setting, screen, stats, sb, ship, aliens, bullets)
-            break
-
-
 def update_aliens(ai_setting, screen, stats, sb, ship, aliens, bullets):
     check_fleet_edges(ai_setting, aliens)
     aliens.update()
@@ -104,20 +96,18 @@ def update_aliens(ai_setting, screen, stats, sb, ship, aliens, bullets):
     check_aliens_bottom(ai_setting,  stats, screen, sb, ship, aliens, bullets)
 
 
+def check_aliens_bottom(ai_setting, stats, screen, sb, ship, aliens, bullets):
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            ship_hit(ai_setting, screen, stats, sb, ship, aliens, bullets)
+            break
+
+
 def fire_bullet(ai_setting, screen, ship, bullets):
     if len(bullets) < ai_setting.bullet_allowed:
         new_bullet = bullet.Bullet(ai_setting, screen, ship)
         bullets.add(new_bullet)
-
-
-def create_fleet(ai_setting, screen, ship, aliens):
-    alien = Alien(ai_setting, screen)
-    number_alien_x = get_number_aliens_x(ai_setting, alien.rect.width)
-    number_rows = get_number_row(
-        ai_setting, ship.rect.height, alien.rect.height)
-    for i in range(number_alien_x):
-        for j in range(number_rows):
-            create_alien(ai_setting, screen, aliens, i, j)
 
 
 def get_number_aliens_x(ai_setting, alien_width):
@@ -141,6 +131,16 @@ def create_alien(ai_setting, screen, aliens, alien_number, row_number):
     alien.y = alien.rect.height + 2 * alien.rect.height * row_number
     alien.rect.y = alien.y
     aliens.add(alien)
+
+
+def create_fleet(ai_setting, screen, ship, aliens):
+    alien = Alien(ai_setting, screen)
+    number_alien_x = get_number_aliens_x(ai_setting, alien.rect.width)
+    number_rows = get_number_row(
+        ai_setting, ship.rect.height, alien.rect.height)
+    for i in range(number_alien_x):
+        for j in range(number_rows):
+            create_alien(ai_setting, screen, aliens, i, j)
 
 
 def check_fleet_edges(ai_setting, aliens):

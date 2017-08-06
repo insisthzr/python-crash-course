@@ -8,11 +8,10 @@ from ship import Ship
 
 class Scoreboard():
     def __init__(self, ai_setting, screen, stats):
-        self.screen = screen
-        self.screen_rect = screen.get_rect()
         self.ai_setting = ai_setting
         self.stats = stats
-
+        self.screen = screen
+        self.screen_rect = screen.get_rect()
         self.text_color = (30, 30, 30)
         self.font = SysFont(None, 48)
 
@@ -32,7 +31,6 @@ class Scoreboard():
         score_str = "{:,}".format(rounded_score)
         self.score_image = self.font.render(
             score_str, True, self.text_color, self.ai_setting.bg_color)
-
         self.score_rect = self.score_image.get_rect()
         self.score_rect.right = self.screen_rect.right - 20
         self.score_rect.top = 20
@@ -42,7 +40,6 @@ class Scoreboard():
         high_score_str = "{:,}".format(high_score)
         self.high_score_image = self.font.render(
             high_score_str, True, self.text_color, self.ai_setting.bg_color)
-
         self.high_score_rect = self.high_score_image.get_rect()
         self.high_score_rect.centerx = self.screen_rect.centerx
         self.high_score_rect.top = 20
